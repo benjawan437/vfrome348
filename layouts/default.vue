@@ -63,7 +63,7 @@ export default {
           to: '/',
         },
         {
-          icon: 'mdi-form-select',
+          icon: 'mdi-credit-card',
           title: 'ชำระเงิน',
           to: '/pay',
         },

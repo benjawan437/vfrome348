@@ -1,13 +1,13 @@
 <template>
   <div>
     <h2>ชำระเงิน</h2>
-    <v-card class="mx-auto pa-6" color="#26c6da" max-width="900" elevation="15">
+    <v-card class="mx-auto pa-6" color="#69F0AE" max-width="900" elevation="15">
       <h3>รายละเอียดบัตรเครดิต</h3>
       <v-form ref="form" v-model="valid" lazy-validation>
         <v-row>
           <v-col cols="7">
             <v-text-field
-              v-model="name"
+              v-model="Pname"
               :rules="nameRules"
               label="ชื่อ-นามสกุล"
               required
@@ -15,74 +15,43 @@
           </v-col>
           <v-col cols="5">
             <v-text-field
-              v-model="phone"
-              :rules="nameRules"
-              label="เบอร์โทร"
-              prepend-icon="mdi-cellphone"
+              v-model="Pemail"
+              :rules="emailRules"
+              label="E-mail"
+              prepend-icon="mdi-email"
               required
             >
               icon="mdi-cellphone"
             </v-text-field>
           </v-col>
         </v-row>
-        <v-text-field
-          v-model="email"
-          :rules="emailRules"
-          label="E-mail"
-          prepend-icon="mdi-email"
-          required
-        ></v-text-field>
         <v-row>
           <v-col cols="6">
             <v-text-field
-              v-model="add"
+              v-model="Pncard"
               :rules="nameRules"
               name="input-7-1"
-              label="ที่อยู่"
+              label="ชื่อบนบัตร"
               required
             ></v-text-field>
           </v-col>
           <v-col cols="6">
             <v-text-field
-              v-model="sub_district"
+              v-model="Pnumcard"
               :rules="nameRules"
               name="input-7-1"
-              label="ตำบล/แขวง"
+              label="หมายเลขบัตร"
               required
             ></v-text-field> </v-col
         ></v-row>
-        <v-row
-          ><v-col cols="6">
-            <v-text-field
-              v-model="district"
-              :rules="nameRules"
-              name="input-7-1"
-              label="อำเภอ/เขต"
-              required
-            ></v-text-field
-          ></v-col>
-          <v-col cols="6">
-            <v-text-field
-              v-model="province"
-              :rules="nameRules"
-              name="input-7-1"
-              label="จังหวัด"
-              required
-            ></v-text-field>
-          </v-col>
-        </v-row>
 
-        <v-divider></v-divider>
-        <h3>รายละเอียด</h3>
         <v-row>
           <v-col cols="6" sm="6">
             <v-menu
               ref="menu"
-              v-model="menu2"
-              :rules="nameRules"
-              :dateout-on-content-click="false"
-              :nudge-right="40"
-              :return-value.sync="datein"
+              v-model="menu"
+              :close-on-content-click="false"
+              :return-value.sync="date"
               transition="scale-transition"
               offset-y
               max-width="290px"
@@ -90,81 +59,37 @@
             >
               <template v-slot:activator="{ on, attrs }">
                 <v-text-field
-                  v-model="datein"
-                  :rules="nameRules"
-                  label="วันที่"
-                  prepend-icon="mdi-table-large"
+                  v-model="date"
+                  label="วันหมดอายุ"
+                  prepend-icon="mdi-calendar"
                   readonly
-                  required
                   v-bind="attrs"
                   v-on="on"
                 ></v-text-field>
               </template>
-              <v-date-picker
-                v-if="menu2"
-                v-model="datein"
-                full-width
-                @click:date="$refs.menu.save(datein)"
-              ></v-date-picker>
+              <v-date-picker v-model="date" type="month" no-title scrollable>
+                <v-spacer></v-spacer>
+                <v-btn text color="primary" @click="menu = false">
+                  Cancel
+                </v-btn>
+                <v-btn text color="primary" @click="$refs.menu.save(date)">
+                  OK
+                </v-btn>
+              </v-date-picker>
             </v-menu>
           </v-col>
 
           <v-col cols="6" sm="6">
-            <v-menu
-              ref="menu1"
-              v-model="menu1"
-              :dateout-on-content-click="false"
-              :nudge-right="40"
-              :return-value.sync="dateout"
-              transition="scale-transition"
-              offset-y
-              max-width="290px"
-              min-width="290px"
-            >
-              <template v-slot:activator="{ on, attrs }">
-                <v-text-field
-                  v-model="dateout"
-                  :rules="nameRules"
-                  label="ถึงวันที่"
-                  prepend-icon="mdi-table-large"
-                  readonly
-                  required
-                  v-bind="attrs"
-                  v-on="on"
-                ></v-text-field>
-              </template>
-              <v-date-picker
-                v-if="menu1"
-                v-model="dateout"
-                full-width
-                @click:date="$refs.menu1.save(dateout)"
-              ></v-date-picker>
-            </v-menu>
+            <v-text-field
+              v-model="Pscode"
+              :rules="nameRules"
+              name="input-7-1"
+              label="รหัสรักษาความปลอดภัย"
+              prepend-icon="mdi-key"
+              required
+            ></v-text-field>
           </v-col>
         </v-row>
-        <v-row>
-          <v-col cols="6">
-            <v-select
-              v-model="room"
-              :rules="nameRules"
-              :items="items"
-              prepend-icon="mdi-home-outline"
-              label="จำนวนห้อง"
-              required
-            ></v-select>
-          </v-col>
-          <v-col cols="6">
-            <v-select
-              v-model="costumers"
-              :rules="nameRules"
-              :items="kon"
-              prepend-icon="mdi-home-outline"
-              label="จำนวนคน"
-              required
-            ></v-select>
-          </v-col>
-        </v-row>
-        <v-divider></v-divider>
 
         <v-row>
           <v-col cols="10"> </v-col>
@@ -174,7 +99,7 @@
                 <template v-slot:activator="{ on, attrs }">
                   <v-btn
                     depressed
-                    color="primary"
+                    color="#558B2F"
                     :disabled="!valid"
                     v-bind="attrs"
                     v-on="on"
@@ -192,15 +117,13 @@
                   <v-divider></v-divider>
                   <v-card-text
                     ><h4>
-                      ชื่อ: {{ name }} <br />
-                      เบอร์โทร: {{ phone }} <br />
-                      E-mail: {{ email }} <br />
-                      ที่อยู่: {{ add }} ตำบล {{ sub_district }} อำเภอ
-                      {{ district }} จังหวัด {{ province }} <br />
-                      ตั้งแต่วันที่ {{ datein }} ถึงวันที่ {{ dateout }}<br />
-                      จำนวน {{ costumers }} คน {{ room }} ห้อง
-                    </h4></v-card-text
-                  >
+                      ชื่อ: {{ Pname }} <br />
+                      E-mail: {{ Pemail }} <br />
+                      ชื่อบนบัตร: {{ Pncard }} <br />
+                      หมายเลขบัตร: {{ Pnumcard }} <br />
+                      วันหมดอายุ {{ date }} <br />
+                      รหัสรักษาความปลอดภัย {{ Pscode }} <br /></h4
+                  ></v-card-text>
 
                   <v-divider></v-divider>
 
@@ -231,25 +154,16 @@
 export default {
   data() {
     return {
-      name: null,
-      phone: '',
+      Pname: null,
       add: '',
       Address: {},
-      room: '',
-      email: '',
-      costumers: '',
-      kon: [1, 2, 3, 4, 5, 6],
-      items: [1, 2, 3, 4, 5, 6],
+      Pncard: '',
+      Pemail: '',
+      Pnumcard: '',
       arr: {},
-      description: '',
-      datein: '',
-      dateout: '',
-      menu1: false,
-      menu2: false,
-      sub_district: '',
-      district: '',
-      province: '',
-      dialog: false,
+      Pscode: '',
+      date: new Date().toISOString().substr(0, 7),
+      menu: false,
       nameRules: [(v) => !!v || 'please required'],
       emailRules: [
         (v) => !!v || 'E-mail is required',
@@ -267,11 +181,12 @@ export default {
     },
     set() {
       this.arr = {
-        name: this.name,
-        email: this.email,
-        room: this.room,
-        costumers: this.costumers,
-        phone: this.phone,
+        Pname: this.Pname,
+        Pemail: this.Pemail,
+        Pncard: this.Pncard,
+        Pnumcard: this.Pnumcard,
+        date: this.date,
+        Pscode: this.Pscode,
         address: {
           add: this.add,
           sub_district: this.sub_district,

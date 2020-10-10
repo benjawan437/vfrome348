@@ -1,6 +1,6 @@
 <template>
   <div>
-    <v-card color="#26c6da">
+    <v-card color="#FFAB40">
       <v-card-title>
         <v-spacer></v-spacer>
         <v-text-field
@@ -19,6 +19,25 @@
         class="elevation-3"
       ></v-data-table>
     </v-card>
+    <v-card color="#69F0AE">
+      <v-card-title>
+        <v-spacer></v-spacer>
+        <v-text-field
+          v-model="search"
+          append-icon="mdi-magnify"
+          label="Search"
+          single-line
+          hide-details
+        ></v-text-field>
+      </v-card-title>
+      <v-data-table
+        :subhead="subhead"
+        :items="desserts"
+        :items-per-page="5"
+        :search="search"
+        class="elevation-3"
+      ></v-data-table>
+    </v-card>
   </div>
 </template>
 
@@ -29,50 +48,36 @@ export default {
       search: '',
       headers: [
         {
-          text: 'ชื่อผู้จอง',
-          align: 'start',
-          sortable: false,
-          value: 'name',
-        },
-        {
-          text: 'E-mail',
-          value: 'email',
+          text: 'ภาพยนตร์',
+          value: 'nmovie',
         },
         {
           text: 'โรงภาพยนตร์',
           value: 'cinema',
         },
         {
-          text: 'ที่อยู่',
-          value: 'address.add',
+          text: 'จองวันที่',
+          value: 'day',
         },
         {
-          text: 'ตำบล/แขวง',
-          value: 'address.sub_district',
-        },
-        {
-          text: 'อำเภอ/เขต',
-          value: 'address.district',
-        },
-        {
-          text: 'จังหวัด',
-          value: 'address.province',
-        },
-        {
-          text: 'จำนวนห้อง',
-          value: 'room',
+          text: 'จองเวลา',
+          value: 'time',
         },
         {
           text: 'จำนวนคน',
-          value: 'costumers',
+          value: 'numpeo',
         },
         {
-          text: 'จองวันที่',
-          value: 'date_in',
+          text: 'เลขที่นั่ง',
+          value: 'seat',
         },
         {
-          text: 'ถึงวันที่',
-          value: 'date_out',
+          text: 'ชื่อผู้จอง',
+          value: 'name',
+        },
+        {
+          text: 'E-mail',
+          value: 'email',
         },
       ],
     }
