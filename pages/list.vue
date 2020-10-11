@@ -31,7 +31,7 @@
         ></v-text-field>
       </v-card-title>
       <v-data-table
-        :subhead="subhead"
+        :headers="subhead"
         :items="desserts"
         :items-per-page="5"
         :search="search"
@@ -78,6 +78,32 @@ export default {
         {
           text: 'E-mail',
           value: 'email',
+        },
+      ],
+      subhead: [
+        {
+          text: 'ชื่อ-นามสกุล',
+          value: 'Pname',
+        },
+        {
+          text: 'E-mail',
+          value: 'Pemail',
+        },
+        {
+          text: 'ชื่อบนบัตร',
+          value: 'Pncard',
+        },
+        {
+          text: 'หมายเลขบนบัตร',
+          value: 'Pnumcard',
+        },
+        {
+          text: 'วันหมดอายุ',
+          value: 'date',
+        },
+        {
+          text: 'รหัสรักษาความปลอดภัย',
+          value: 'Pscode',
         },
       ],
     }
